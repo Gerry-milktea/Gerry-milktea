@@ -1,0 +1,86 @@
+TebLocalPlannerROS:
+  odom_topic: odom
+  map_frame: /map
+
+# Robot 相关参数
+  max_vel_x: 1.25
+  max_vel_x_backwards: 0.75   #倒车速度，不能设置0或负数，不能禁止倒车
+  max_vel_theta: 2.84       #速度约束
+
+  acc_lim_x: 0.79      #电机性能好，设为0表示没有约束 
+  acc_lim_theta: 2.67  #加速度约束  
+
+  min_turning_radius: 0.0    #最小转弯半径
+  is_footprint_dynamic: false
+  footprint_model:
+    type: "polygon"
+    vertices: [[0.165, 0.165], [0.165, -0.165], [-0.165, -0.165], [-0.165, 0.165]]
+
+  yaw_goal_tolerance: 0.6  #目标位置角度误差
+  xy_goal_tolerance: 0.5   #目标位置距离误差
+  free_goal_vel: false #
+
+# Trajectory 轨迹相关参数
+  dt_ref: 0.6   #轨迹的时间分辨率，TEB时间最优策略，分辨率越高更好逼近真实
+  dt_hysteresis: 0.08
+  min_samples: 3
+  global_plan_overwrite_orientation: true
+  global_plan_viapoint_sep: -0.1
+  max_global_plan_lookahead_dist: 1.2614  #考虑优化的全局计划子集的最大长度（累计欧几里得距离）
+  force_reinit_new_goal_dist: 1.0
+  feasibility_check_no_poses: 5
+  publish_feedback: false
+  allow_init_with_backwards_motion: false
+  exact_arc_length: false
+  shrink_horizon_backup: true
+  shrink_horizon_min_duration: 10.0
+
+# obstacle 障碍相关参数
+  min_obstacle_dist: 0.06  #障碍物膨胀半径
+  inflation_dist: 0.0  #障碍物缓冲区，进入缓冲器减速，比膨胀半径大才有效
+  dynamic_obstacle_inflation_dist: 0.1
+  include_costmap_obstacles: true   #设置为true时才能规避实时障碍物
+  costmap_obstacles_behind_robot_dist: 1.0  #考虑后方ｎ米范围内的障碍物
+  include_dynamic_obstacles: false  　
+  legacy_obstacle_association: false
+  obstacle_association_force_inclusion_factor: 1.5  
+  obstacle_association_cutoff_factor: 5
+  obstacle_poses_affected: 10    # 调小
+  costmap_converter_plugin: ""
+  costmap_converter_spin_thread: true
+  costmap_converter_rate: 5.0
+
+# 权重参数
+  no_inner_iterations: 3  
+  no_outer_iterations: 2
+  penalty_epsilon: 0.1  #到达速度限制前让其提前减速达到缓冲的效果
+  weight_acc_lim_x: 1.0
+  weight_acc_lim_theta: 1.0
+  weight_max_vel_x: 1.0  #最大速度权重，高速还是低速运行看权重的分配
+  weight_max_vel_theta: 0.0 #最大角速度的优化权重
+  weight_kinematics_nh: 1000.0 #运动学的优化权重
+  weight_kinematics_forward_drive: 1000.0  #倒车权重0-1000，设置成1000也不能完全禁止倒车
+  weight_kinematics_turning_radius: 1.0    #最小转弯半径权重0-1000，越大越容易达到最小转向半径
+  weight_optimaltime: 20  #最优时间权重0-1000，越大那么车会在直道快速加速，切内道,越小越稳定
+  weight_obstacle: 40.0 
+  weight_viapoint: 1.0　
+  weight_inflation: 0.2 #膨胀半径权重，默认0.1
+  weight_dynamic_obstacle: 34.0
+  weight_adapt_factor: 2.0
+
+  enable_homotopy_class_planning: true
+  enable_multithreading: true #激活多个线程
+  max_number_classes: 7 #考虑到的不同轨迹的最大数量
+  selection_cost_hysteresis: 1.0 
+  selection_obst_cost_scale: 100.0
+  selection_viapoint_cost_scale: 1.0
+  selection_alternative_time_cost: false
+  roadmap_graph_no_samples: 15
+  roadmap_graph_area_width: 5
+  h_signature_prescaler: 1.0
+  h_signature_threshold: 0.1
+  obstacle_heading_threshold: 0.45
+  visualize_hc_graph: false
+  viapoints_all_candidates: true
+  switching_blocking_period: 0.0
+

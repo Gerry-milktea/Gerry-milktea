@@ -1,0 +1,19 @@
+<launch>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/global_costmap_params.yaml" command="load" />
+
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/move_base_params.yaml" command="load" />
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/base_global_planner_params.yaml" command="load" />
+    <rosparam file="$(find gazebo_nav)/launch/config/move_base/teb_local_planner_params.yaml" command="load" />
+
+    <!-- 打开teb的发布反馈 -->
+    <!-- <param name="TebLocalPlannerROS/publish_feedback" value="true" /> -->
+  </node>
+  
+</launch>

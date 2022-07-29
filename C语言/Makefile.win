@@ -1,0 +1,28 @@
+# Project: 计算圆和矩形面积周长
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = circle.o rectangle.o m.o
+LINKOBJ  = circle.o rectangle.o m.o
+LIBS     = -L"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/lib" -L"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/include" -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/include" -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/AppGallery/Software/Dev编程/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = 计算圆和矩形面积周长.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+circle.o: circle.c
+	$(CPP) -c circle.c -o circle.o $(CXXFLAGS)
